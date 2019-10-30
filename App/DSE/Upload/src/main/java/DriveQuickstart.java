@@ -12,6 +12,7 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import com.google.api.client.http.FileContent;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class DriveQuickstart {
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
-    private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_METADATA_READONLY);
+    private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     /**
@@ -64,19 +65,15 @@ public class DriveQuickstart {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
-        // Print the names and IDs for up to 10 files.
-        FileList result = service.files().list()
-                .setPageSize(10)
-                .setFields("nextPageToken, files(id, name)")
-                .execute();
-        List<File> files = result.getFiles();
-        if (files == null || files.isEmpty()) {
-            System.out.println("No files found.");
-        } else {
-            System.out.println("Files:");
-            for (File file : files) {
-                System.out.printf("%s (%s)\n", file.getName(), file.getId());
-            }
-        }
+                // Simple upload code provided by Drive API. Has been modified to fit the specifics of the file.
+                File fileMetadata = new File();
+                fileMetadata.setName("Hello.txt");
+                java.io.File filePath = new java.io.File("Hello.txt");
+                FileContent mediaContent = new FileContent("hello/text", filePath);
+                File file = service.files().create(fileMetadata, mediaContent)
+                    .setFields("id")
+                    .execute();
+                System.out.println("File ID: " + file.getId());
+
     }
 }
