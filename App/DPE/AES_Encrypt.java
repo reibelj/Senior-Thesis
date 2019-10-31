@@ -66,7 +66,7 @@ public class AES_Encrypt {
     {
     final String secretKey = "ssshhhhhhhhhhh!!!!";
 
-    String originalString = "howtodoinjava.com";
+    String originalString = "Hello!";
     String encryptedString = AES_Encrypt.encrypt(originalString, secretKey) ;
     String decryptedString = AES_Encrypt.decrypt(encryptedString, secretKey) ;
 
