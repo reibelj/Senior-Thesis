@@ -68,8 +68,10 @@ public class DriveQuickstart {
                 // Simple upload code provided by Drive API. Has been modified to fit the specifics of the file.
                 File fileMetadata = new File();
                 fileMetadata.setName("Hello.txt");
-                java.io.File filePath = new java.io.File("Hello.txt");
-                FileContent mediaContent = new FileContent("hello/text", filePath);
+                // create some procedure to encrypt the file
+                // new file cs200-enc.txt
+                java.io.File filePath = new java.io.File("Hello-enc.txt");
+                FileContent mediaContent = new FileContent("text/txt", filePath);
                 File file = service.files().create(fileMetadata, mediaContent)
                     .setFields("id")
                     .execute();

@@ -1,8 +1,7 @@
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Base64;
+import java.util.*;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -64,14 +63,23 @@ public class AES_Encrypt {
 
     public static void main(String[] args)
     {
-    final String secretKey = "ssshhhhhhhhhhh!!!!";
 
-    String originalString = "Hello!";
-    String encryptedString = AES_Encrypt.encrypt(originalString, secretKey) ;
-    String decryptedString = AES_Encrypt.decrypt(encryptedString, secretKey) ;
-
-    System.out.println(originalString);
-    System.out.println(encryptedString);
-    System.out.println(decryptedString);
+      try {
+          File input = new File("Hello.txt");
+          File output = new File("Hello_enc.txt");
+          Scanner sc = new Scanner(input);
+          PrintWriter printer = new PrintWriter(output);
+          while(sc.hasNextLine()) {
+            final String secretKey = "ssshhhhhhhhhhh!!!!";
+            String originalString = sc.nextLine();
+            String encryptedString = AES_Encrypt.encrypt(originalString, secretKey) ;
+            printer.write(encryptedString);
+            printer.flush();
+          }
+          printer.close();
+      }
+      catch(FileNotFoundException e) {
+          System.err.println("File not found. Please scan in new file.");
+      }
+    }
   }
-}
