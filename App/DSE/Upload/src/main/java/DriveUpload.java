@@ -12,6 +12,7 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import com.google.api.client.http.FileContent;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
-public class DriveQuickstart {
+public class DriveUpload {
     private static final String APPLICATION_NAME = "Google Drive API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
@@ -30,7 +31,7 @@ public class DriveQuickstart {
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
-    private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE_METADATA_READONLY);
+    private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     /**
@@ -41,7 +42,7 @@ public class DriveQuickstart {
      */
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
-        InputStream in = DriveQuickstart.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = DriveUpload.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
@@ -57,6 +58,7 @@ public class DriveQuickstart {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
+    // AES_Encrypt encrypt = new AES_Encrypt(); // Instatiate object of class AES_Encrypt
     public static void main(String... args) throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -64,10 +66,19 @@ public class DriveQuickstart {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
-      String fileId = "1qDOiBbTiln-UPwhgpIN_V-eRUMU6yiQH";
-      OutputStream outputStream = new ByteArrayOutputStream();
-      driveService.files().get(fileId)
-        .executeMediaAndDownloadTo(outputStream);
+                // Simple upload code provided by Drive API. Has been modified to fit the specifics of the file.
+                File fileMetadata = new File();
+                fileMetadata.setName("Hello.txt");
+                // create some procedure to encrypt the file (call AES_Encrypt Main with Hello.txt as a parameter)
+                // new file hello-enc.txt (handled by AES_Encrypt)
+
+                //AES_Encrypt.main("Hello.txt"); // Cannot find symbol
+                java.io.File filePath = new java.io.File("Hello.txt"); // Hello_enc.txt
+                FileContent mediaContent = new FileContent("text/txt", filePath);
+                File file = service.files().create(fileMetadata, mediaContent)
+                    .setFields("id")
+                    .execute();
+                System.out.println("File ID: " + file.getId());
 
     }
 }
