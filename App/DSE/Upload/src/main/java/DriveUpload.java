@@ -68,13 +68,11 @@ public class DriveUpload {
 
                 // Simple upload code provided by Drive API. Has been modified to fit the specifics of the file.
                 File fileMetadata = new File();
-                fileMetadata.setName("Hello.txt");
+                fileMetadata.setName("HelloWorld_enc.txt");
                 // create some procedure to encrypt the file (call AES_Encrypt Main with Hello.txt as a parameter)
                 // new file hello-enc.txt (handled by AES_Encrypt)
-
-                //AES_Encrypt.main("Hello.txt"); // Cannot find symbol
-                java.io.File filePath = new java.io.File("Hello.txt"); // Hello_enc.txt
-                FileContent mediaContent = new FileContent("text/txt", filePath);
+                java.io.File filePath = new java.io.File("HelloWorld_enc.txt");
+                FileContent mediaContent = new FileContent("plain/text", filePath);
                 File file = service.files().create(fileMetadata, mediaContent)
                     .setFields("id")
                     .execute();

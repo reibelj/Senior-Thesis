@@ -6,7 +6,7 @@ import java.util.*;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-public class AES_Encrypt {
+public class AES_Decrypt {
 
     private static SecretKeySpec secretKey;
     private static byte[] key;
@@ -65,15 +65,15 @@ public class AES_Encrypt {
     {
 
       try {
-          File input = new File("HelloWorld.txt");
-          File output = new File("HelloWorld_enc.txt");
+          File input = new File("HelloWorld_enc.txt");
+          File output = new File("HelloWorld.txt");
           Scanner sc = new Scanner(input);
           PrintWriter printer = new PrintWriter(output);
           while(sc.hasNextLine()) {
             final String secretKey = "ssshhhhhhhhhhh!!!!";
-            String originalString = sc.nextLine();
-            String encryptedString = AES_Encrypt.encrypt(originalString, secretKey) ;
-            printer.write(encryptedString);
+            String encryptedString = sc.nextLine();
+            String decryptedString = AES_Decrypt.decrypt(encryptedString, secretKey) ;
+            printer.write(decryptedString);
             printer.flush();
           }
           printer.close();
