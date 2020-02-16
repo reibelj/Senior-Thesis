@@ -96,13 +96,15 @@ public class DropboxDriver {
         DbxClientV2 client = new DbxClientV2(config, args[0]);
         String filePath = "/home/jon/Desktop/cs600-610/Senior-Thesis/App/Dropbox/Hello2.txt";
         String dropboxDownloadPath = "/Test/HelloWorld.txt";
+        // Location of file within Dropbox site (folder)
         String downloadFileName = "HelloWorld.txt";
         String dropboxUploadPath = "/Test/Hello2.txt";
+        // Location of where the file where be uploaded to on the Dropbox site
 
         DropboxDriver obj = new DropboxDriver();
 
-        obj.downloadFile(dropboxDownloadPath, downloadFileName, client);
-        obj.uploadFile(filePath, dropboxUploadPath, client);
+        //obj.downloadFile(dropboxDownloadPath, downloadFileName, client);
+        //obj.uploadFile(filePath, dropboxUploadPath, client);
         //obj.listFilesandFoldersRecursive("", client);
         //obj.listFilesandFoldersRecursive("/teaching/CMPSC112", client);
 

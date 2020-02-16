@@ -65,8 +65,9 @@ public class AES_Encrypt {
     {
 
       try {
-          File input = new File("HelloWorld.txt");
-          File output = new File("HelloWorld_enc.txt");
+          File input = new File("Input/HelloWorld.txt");
+          // Handlde various files? Scanner / user input?
+          File output = new File("Input/Enc/HelloWorld_enc.txt");
           Scanner sc = new Scanner(input);
           PrintWriter printer = new PrintWriter(output);
           while(sc.hasNextLine()) {
