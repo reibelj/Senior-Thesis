@@ -22,7 +22,9 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
-public class DriveUpload {
+import enc.AES_Encrypt;
+
+public class GoogleDriveDriver {
     private static final String APPLICATION_NAME = "Google Drive API Java Quickstart";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
@@ -42,7 +44,7 @@ public class DriveUpload {
      */
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         // Load client secrets.
-        InputStream in = DriveUpload.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = GoogleDriveDriver.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
@@ -58,7 +60,6 @@ public class DriveUpload {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    // AES_Encrypt encrypt = new AES_Encrypt(); // Instatiate object of class AES_Encrypt
     public static void main(String... args) throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
@@ -67,9 +68,12 @@ public class DriveUpload {
                 .build();
 
                 // Simple upload code provided by Drive API. Has been modified to fit the specifics of the file.
+                // AES_Encrypt encrypt = new AES_Encrypt(); // Instatiate object of class AES_Encrypt
+                AES_Encrypt encrypt = new AES_Encrypt();
+                encrypt.main();
                 File fileMetadata = new File();
                 fileMetadata.setName("HelloWorld_enc.txt");
-                // create some procedure to encrypt the file (call AES_Encrypt Main with Hello.txt as a parameter)
+                // create some procedure to encrypt the file (call AES_Encrypt Main with HelloWorld.txt (within Input directory) as a parameter)
                 // new file hello-enc.txt (handled by AES_Encrypt)
                 java.io.File filePath = new java.io.File("HelloWorld_enc.txt");
                 FileContent mediaContent = new FileContent("plain/text", filePath);
