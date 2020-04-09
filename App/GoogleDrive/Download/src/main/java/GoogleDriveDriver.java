@@ -65,15 +65,10 @@ public class GoogleDriveDriver {
                 .build();
 
                 // Simple upload code provided by Drive API. Has been modified to fit the specifics of the file.
-
-                File fileMetadata = new File();
-                fileMetadata.setName("Hello2.txt");
-                java.io.File filePath = new java.io.File("Hello2.txt");
-                FileContent mediaContent = new FileContent("plain/text", filePath);
-                File file = service.files().create(fileMetadata, mediaContent)
-                    .setFields("id")
-                    .execute();
-                System.out.println("File ID: " + file.getId());
+                String fileId = "139yyeu07KunEriM9RB5BjqC-rJzE8hzg";
+                OutputStream outputStream = new ByteArrayOutputStream();
+                service.files().get(fileId)
+                    .executeMediaAndDownloadTo(outputStream);
 
     }
 }
